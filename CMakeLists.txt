@@ -27,11 +27,12 @@ target_include_directories(particle-playground PUBLIC volkanic-toolkit/include)
 
 target_sources(particle-playground PRIVATE
     src/main.cpp
+    src/App.cpp
     )
 target_link_libraries(particle-playground PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML spdlog apputils)
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
-    target_compile_definitions(particle-playground PRIVATE ONE_HIT_WONDER_DEBUG)
+    target_compile_definitions(particle-playground PRIVATE PARTICLE_PLAYGROUND_DEBUG)
 endif()
 
 add_custom_target(format
