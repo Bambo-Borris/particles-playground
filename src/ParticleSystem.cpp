@@ -81,7 +81,7 @@ void ParticleSystem::stepParticles(const sf::Time& dt)
             continue;
 
         p.activeTime += dt;
-
+        p.position += (p.speed * p.direction) * dt.asSeconds();
         constructParticleGeometry(p);
     }
 }
@@ -91,8 +91,18 @@ void ParticleSystem::constructParticleGeometry(const Particle& p)
     // Really shouldn't end up in this state...
     assert(p.active);
 
+    const auto halfBounds = m_config.size * 0.5f;
     std::array<sf::Vertex, 4> quadVertices;
 
-    for (const auto& v : quadVertices)
-        m_vertices.append(v);
+    quadVertices[0].position = p.position + sf::Vector2f { -halfBounds.x, -halfBounds.y };
+    quadVertices[1].position = p.position + sf::Vector2f { halfBounds.x, -halfBounds.y };
+    quadVertices[2].position = p.position + sf::Vector2f { halfBounds.x, halfBounds.y };
+    quadVertices[3].position = p.position + sf::Vector2f { -halfBounds.x, halfBounds.y };
+
+    m_vertices.append(quadVertices[0]);
+    m_vertices.append(quadVertices[1]);
+    m_vertices.append(quadVertices[2]);
+    m_vertices.append(quadVertices[2]);
+    m_vertices.append(quadVertices[3]);
+    m_vertices.append(quadVertices[0]);
 }
