@@ -13,7 +13,7 @@ inline float EaseOutElastic(float v0, float v1, float t)
 {
     constexpr auto c4 { (2.f * PI) / 3.f };
     const auto distance { v1 - v0 };
-    const auto result { t == 0.f ? 0.f : t == 1 ? 1 : pow(2.f, -10.f * t) * sin((t * 10.f - 0.75f) * c4) + 1.f };
-    return v0 + (distance * result);
+    const auto result { t == 0.f ? 0.f : t == 1 ? 1 : std::pow(2.f, -10.f * t) * std::sin((t * 10.f - 0.75f) * c4) + 1.f };
+    return v0 + float(distance * result);
 }
 } // namespace apputils

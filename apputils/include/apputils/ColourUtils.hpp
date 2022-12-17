@@ -42,7 +42,6 @@ inline sf::Colour FloatArrayToColour(const std::array<float, 4>& colour)
 
 inline sf::Colour LerpColour(const sf::Color& start, const sf::Color& end, float t)
 {
-    sf::Colour out;
     const auto startArray = ColourToFloatArray(start);
     const auto endArray = ColourToFloatArray(end);
 

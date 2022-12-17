@@ -5,13 +5,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(external)
 add_subdirectory(apputils)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
-    add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+if(MSVC)
     add_compile_options(/W4 /WX /permissive-)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+    add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion)
+    message("Hello World")
 endif()
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND CMAKE_BUILD_TYPE STREQUAL "Release")
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_executable(particle-playground WIN32)
     target_link_libraries(particle-playground PRIVATE SFML::Main)
 else()
@@ -28,6 +29,7 @@ target_include_directories(particle-playground PUBLIC volkanic-toolkit/include)
 target_sources(particle-playground PRIVATE
     src/main.cpp
     src/App.cpp
+    src/ParticleSystem.cpp
     )
 target_link_libraries(particle-playground PRIVATE SFML::Graphics ImGui-SFML::ImGui-SFML spdlog apputils)
 
